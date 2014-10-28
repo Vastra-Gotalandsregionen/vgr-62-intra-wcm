@@ -1,0 +1,15 @@
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="link-to-page" fieldNamespace="ddm" indexType="keyword" localizable="true" name="parentPage" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-link-to-page" width="small">
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Utgå från följande sida]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[]]>
+			</entry>
+			<entry name="tip">
+				<![CDATA[]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+</root>
