@@ -44,7 +44,7 @@
                 ${itemDate}
               </div>
               <div class="news-item-heading">
-                  ${itemHeading}
+                ${itemHeading}
               </div>
               <div class="news-item-summary">
                 ${itemSummary}
