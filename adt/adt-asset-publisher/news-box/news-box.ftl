@@ -18,25 +18,66 @@
 <#assign news_layout = layoutLocalService.fetchLayoutByFriendlyURL(group_id, page.isPrivateLayout(), news_layout_friendly_url)! />
 -->
 
-<#if entries?has_content>
+<#assign maxItemsToDisplay = 6 />
+
+<#assign maxSummaryChars = 90 />
+<#assign maxHeadingChars = 35 />
+
+<div class="news-box">
 
   <h1>
     Nyheter
   </h1>
 
-  <ul>
-    <#list entries as entry>
-      <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
-      <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
-      <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
-      <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
-      <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MMM-dd")>
+  <#if entries?has_content>
+    <div class="news-items">
+      <#list entries as entry>
 
-      <li>
-        ${itemDate} - ${itemHeading}
-      </li>
+        <#if entry_index gte maxItemsToDisplay>
+          <#break>
+        </#if>
 
-    </#list>
-  </ul>
+				<#assign assetRenderer = entry.getAssetRenderer() />
+				<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
 
-</#if>
+				<#if assetLinkBehavior != "showFullContent">
+					<#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
+				</#if>
+
+        <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
+        <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
+        <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
+        <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
+        <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MMM-dd")>
+
+
+        <div class="news-item">
+          <a href="${viewURL}">
+            <div class="news-item-inner">
+              <div class="news-item-date">
+                ${itemDate}
+              </div>
+              <div class="news-item-heading">
+                  ${ellipsis(itemHeading, maxHeadingChars)}
+              </div>
+              <div class="news-item-summary">
+                ${ellipsis(itemSummary, maxSummaryChars)}
+              </div>
+            </div>
+          </a>
+        </div>
+
+
+      </#list>
+    </div>
+  </#if>
+
+</div>
+
+<#function ellipsis myString maxChars>
+  <#if myString?length gt maxChars>
+    <#return myString?substring(0, maxChars) + "..." />
+	<#else>
+		<#return myString />
+	</#if>
+</#function>
