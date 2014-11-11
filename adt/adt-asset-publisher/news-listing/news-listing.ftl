@@ -34,7 +34,7 @@
         <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
         <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
         <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
-        <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MMM-dd")>
+        <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
 
 
         <div class="news-item">
