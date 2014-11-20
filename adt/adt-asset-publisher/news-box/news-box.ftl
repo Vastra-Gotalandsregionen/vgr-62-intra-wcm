@@ -15,7 +15,7 @@
 
 <#assign maxItemsToDisplay = 6 />
 
-<#assign maxSummaryChars = 90 />
+<#assign maxSummaryChars = 80 />
 <#assign maxHeadingChars = 35 />
 
 <div class="news-box">
@@ -45,8 +45,10 @@
         <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
         <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
 
+        <#assign itemType = docXml.valueOf("//dynamic-element[@name='type']/dynamic-content/text()") />
 
-        <div class="news-item">
+
+        <div class="news-item news-item-${itemType}">
           <a href="${viewURL}">
             <div class="news-item-inner">
               <div class="news-item-date">

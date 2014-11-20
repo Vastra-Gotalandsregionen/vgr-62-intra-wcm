@@ -15,7 +15,7 @@
 
 <#assign maxItemsToDisplay = 1 />
 
-<#assign maxSummaryChars = 90 />
+<#assign maxSummaryChars = 170 />
 
 <div class="staff-week-box content-box">
   <#if entries?has_content>
@@ -25,20 +25,28 @@
         <#break>
       </#if>
 
+      <#assign assetRenderer = entry.getAssetRenderer() />
+      <#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
+
+      <#if assetLinkBehavior != "showFullContent">
+        <#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
+      </#if>
+
       <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
       <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
       <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
       <#assign itemImage = docXml.valueOf("//dynamic-element[@name='image']/dynamic-content/text()") />
+
 
       <h2>
         ${itemHeading}
       </h2>
 
       <div class="content-box-bd">
-        ${itemSummary}
-        <div>
+        <a href="${viewURL}">
           <img src="${itemImage}" alt"Img" />
-        </div>
+          ${ellipsis(itemSummary, maxSummaryChars)}
+        </a>
       </div>
     </#list>
   </#if>

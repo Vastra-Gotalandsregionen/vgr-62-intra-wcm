@@ -13,6 +13,9 @@
 <#assign expandoValueLocalService = serviceLocator.findService("com.liferay.portlet.expando.service.ExpandoValueLocalService") />
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 
+<#assign maxSummaryChars = 50 />
+<#assign maxHeadingChars = 25 />
+
 <div class="news-listing">
 
   <h1>
@@ -44,10 +47,10 @@
                 ${itemDate}
               </div>
               <div class="news-item-heading">
-                ${itemHeading}
+                ${ellipsis(itemHeading, maxHeadingChars)}
               </div>
               <div class="news-item-summary">
-                ${itemSummary}
+                ${ellipsis(itemSummary, maxSummaryChars)}
               </div>
             </div>
           </a>
@@ -58,3 +61,11 @@
   </#if>
 
 </div>
+
+<#function ellipsis myString maxChars>
+  <#if myString?length gt maxChars>
+    <#return myString?substring(0, maxChars) + "..." />
+  <#else>
+    <#return myString />
+  </#if>
+</#function>

@@ -2,48 +2,76 @@
 <#assign groupLocalService = serviceLocator.findService("com.liferay.portal.service.GroupLocalService") >
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService") >
 
+<#-- Define some variables -->
+<#assign portletNamespace = request["portlet-namespace"] />
+<#assign portletNamespace = trimPortletNamespace(portletNamespace) />
 
-<#-- Get Parent Layout -->
-<#assign parentPageData = parentPage.data?split("@") />
+<#assign maxDescriptionChars = 140 />
 
-<#assign parentLayoutId =  getterUtil.getLong(parentPageData[0]) />
+<nav role="navigation" class="block-navigation" id="${portletNamespace}blockNavigation">
+	<#if pages.siblings?has_content>
+		<#list pages.siblings as page>
 
-<#assign parentLayoutIsPrivate =  false />
-<#if parentPageData[1] == "private">
-	<#assign parentLayoutIsPrivate = true />
-</#if>
+			<#-- Get Page Layout -->
+			<#assign pageData = page.data?split("@") />
 
-<#assign parentLayoutGroupId = getterUtil.getLong(parentPageData[2]) />
+			<#assign pageLayoutId =  getterUtil.getLong(pageData[0]) />
 
-<#assign parentLayout = layoutLocalService.getLayout(parentLayoutGroupId, parentLayoutIsPrivate, parentLayoutId) >
+			<#assign pageLayoutIsPrivate =  false />
+			<#if pageData[1] == "private">
+				<#assign pageLayoutIsPrivate = true />
+			</#if>
 
-<#-- Get Child Layouts -->
-<#assign childLayouts = layoutLocalService.getLayouts(parentLayout.groupId, parentLayout.isPrivateLayout(), parentLayout.layoutId) />
+			<#assign pageLayoutGroupId = getterUtil.getLong(pageData[2]) />
 
-<#if childLayouts?has_content>
-	<nav role="navigation" class="block-navigation">
-		<ul class="level-1">
-			<#list childLayouts as childLayout>
-				<#assign subChildLayouts = layoutLocalService.getLayouts(childLayout.groupId, childLayout.isPrivateLayout(), childLayout.layoutId) />
-				<li>
-					<div class="level-1-content">
-						<a href="${childLayout.friendlyURL}">
-							${childLayout.getName(locale) }
-						</a>
-						<#if subChildLayouts?has_content>
-							<ul class="level-2">
-								<#list subChildLayouts as subChildLayout>
-									<li>
-										<a href="${subChildLayout.friendlyURL}">
-											${subChildLayout.getName(locale) }
-										</a>
-									</li>
-								</#list>
-							</ul>
+			<#assign pageLayout = layoutLocalService.getLayout(pageLayoutGroupId, pageLayoutIsPrivate, pageLayoutId) >
+
+
+			<div class="block-navigation-item">
+				<a href="${pageLayout.friendlyURL}">
+					<div class="title">${pageLayout.getName(locale) }</div>
+
+					<div class="img-wrap">
+						<#if page.image.data?has_content>
+							<img src="${page.image.data}" alt="ikon" />
+						<#else>
+							&nbsp;
 						</#if>
 					</div>
-				</li>
-			</#list>
-		</ul>
-	</nav
-</#if>
+
+					<div class="description">
+						${ellipsis(page.description.data, maxDescriptionChars)}
+					</div>
+				</a>
+			</div>
+		</#list>
+	</#if>
+
+</nav>
+
+
+
+<script type="text/javascript">
+
+	var ${portletNamespace}portletNode = document.getElementById('portlet${portletNamespace}');
+
+	${portletNamespace}portletNode.className = ${portletNamespace}portletNode.className + ' portlet-bg-transp';
+
+
+</script>
+
+
+<#function trimPortletNamespace text>
+	<#if text[text?length-1] = "_">
+		<#local text = text?substring(0, text?length-1) />
+	</#if>
+	<#return text />
+</#function>
+
+<#function ellipsis myString maxChars>
+	<#if myString?length gt maxChars>
+		<#return myString?substring(0, maxChars) + "..." />
+	<#else>
+		<#return myString />
+	</#if>
+</#function>
