@@ -11,9 +11,9 @@
 
 <div class="staff-week-listing">
 
-  <h1>
+  <h2>
     Min vecka
-  </h1>
+  </h2>
 
   <#if entries?has_content>
     <div class="staff-week-items">
@@ -35,14 +35,16 @@
           <a href="${viewURL}">
             <div class="staff-week-item-inner">
 
-              <div class="staff-week-item-image">
-                <img src="${itemImage}" alt"Img" />
+              <div class="staff-week-item-heading">
+                ${ellipsis(itemHeading, maxHeadingChars)}
               </div>
 
               <div class="staff-week-item-content">
-                <div class="staff-week-item-heading">
-                  ${ellipsis(itemHeading, maxHeadingChars)}
+
+                <div class="staff-week-item-image">
+                  <img src="${itemImage}" alt"Img" />
                 </div>
+
                 <div class="staff-week-item-summary">
                   ${ellipsis(itemSummary, maxSummaryChars)}
                 </div>

@@ -18,9 +18,9 @@
 
 <div class="news-listing">
 
-  <h1>
+  <h2>
     Nyheter
-  </h1>
+  </h2>
 
   <#if entries?has_content>
     <div class="news-items">
