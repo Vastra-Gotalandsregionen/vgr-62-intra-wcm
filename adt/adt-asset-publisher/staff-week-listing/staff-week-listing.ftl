@@ -6,8 +6,8 @@
 
 <#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
 
-<#assign maxSummaryChars = 50 />
-<#assign maxHeadingChars = 25 />
+<#assign maxSummaryChars = 100 />
+<#assign maxHeadingChars = 30 />
 
 <div class="staff-week-listing">
 
@@ -39,18 +39,11 @@
                 ${ellipsis(itemHeading, maxHeadingChars)}
               </div>
 
-              <div class="staff-week-item-content">
-
-                <div class="staff-week-item-image">
-                  <img src="${itemImage}" alt"Img" />
-                </div>
-
                 <div class="staff-week-item-summary">
                   ${ellipsis(itemSummary, maxSummaryChars)}
                 </div>
               </div>
 
-            </div>
           </a>
         </div>
 
@@ -62,7 +55,7 @@
 
 <#function ellipsis myString maxChars>
   <#if myString?length gt maxChars>
-    <#return myString?substring(0, maxChars) + "..." />
+    <#return myString?substring(0, maxChars-3) + "..." />
   <#else>
     <#return myString />
   </#if>
