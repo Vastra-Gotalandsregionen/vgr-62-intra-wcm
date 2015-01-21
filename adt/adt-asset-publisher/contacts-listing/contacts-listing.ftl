@@ -1,10 +1,17 @@
 <#setting locale=locale>
 
-
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 <#assign liferay_util = taglibLiferayHash["/WEB-INF/tld/liferay-util.tld"] />
-
 <#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
+
+<#-- Constants -->
+<#assign personStructureName = "Person" />
+
+<#-- Services -->
+<#assign classNameLocalService = serviceLocator.findService("com.liferay.portal.service.ClassNameLocalService") />
+<#assign ddmStructureLocalService = serviceLocator.findService("com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService") />
+
+<#assign articleClassNameId = classNameLocalService.getClassNameId("com.liferay.portlet.journal.model.JournalArticle") />
 
 <div class="contacts-listing content-box">
 
@@ -19,40 +26,46 @@
         <#list entries as entry>
 
           <#assign assetRenderer = entry.getAssetRenderer() />
+          <#assign article = assetRenderer.getArticle() />
 
-          <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
-          <#assign contactName = docXml.valueOf("//dynamic-element[@name='name']/dynamic-content/text()") />
-          <#assign contactTitle = docXml.valueOf("//dynamic-element[@name='title']/dynamic-content/text()") />
-          <#assign contactEmail = docXml.valueOf("//dynamic-element[@name='email']/dynamic-content/text()") />
-          <#assign contactPhone = docXml.valueOf("//dynamic-element[@name='phone']/dynamic-content/text()") />
+          <#assign structure = ddmStructureLocalService.getStructure(entry.getGroupId(), articleClassNameId, article.getStructureId())! />
+          <#assign structureName = structure.getName("sv_SE") />
 
-          <div class="contact">
+          <#if structureName == personStructureName>
+            <#assign docXml = saxReaderUtil.read(article.getContentByLocale(locale)) />
+            <#assign contactName = docXml.valueOf("//dynamic-element[@name='name']/dynamic-content/text()") />
+            <#assign contactTitle = docXml.valueOf("//dynamic-element[@name='title']/dynamic-content/text()") />
+            <#assign contactEmail = docXml.valueOf("//dynamic-element[@name='email']/dynamic-content/text()") />
+            <#assign contactPhone = docXml.valueOf("//dynamic-element[@name='phone']/dynamic-content/text()") />
 
-            <div class="contact-name">
-              ${contactName}
-            </div>
+            <div class="contact">
 
-            <#if contactTitle != "">
+              <div class="contact-name">
+                ${contactName}
+              </div>
+
+              <#if contactTitle != "">
               <div class="contact-title">
                 ${contactTitle}
               </div>
-            </#if>
+              </#if>
 
-            <#if contactEmail != "">
+              <#if contactEmail != "">
               <div class="contact-email">
                 <a href ="mailto:${contactEmail}">
                   ${contactEmail}
                 </a>
               </div>
-            </#if>
+              </#if>
 
-            <#if contactPhone != "">
+              <#if contactPhone != "">
               <div class="contact-phone">
                 ${contactPhone}
               </div>
-            </#if>
+              </#if>
 
-          </div>
+            </div>
+          </#if>
 
         </#list>
       </div>
