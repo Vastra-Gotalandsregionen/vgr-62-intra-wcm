@@ -34,7 +34,7 @@
           <#if structureName == personStructureName>
             <#assign docXml = saxReaderUtil.read(article.getContentByLocale(locale)) />
             <#assign contactName = docXml.valueOf("//dynamic-element[@name='name']/dynamic-content/text()") />
-            <#assign contactTitle = docXml.valueOf("//dynamic-element[@name='title']/dynamic-content/text()") />
+            <#assign contactTitle = docXml.valueOf("//dynamic-element[@name='jobTitle']/dynamic-content/text()") />
             <#assign contactEmail = docXml.valueOf("//dynamic-element[@name='email']/dynamic-content/text()") />
             <#assign contactPhone = docXml.valueOf("//dynamic-element[@name='phone']/dynamic-content/text()") />
 

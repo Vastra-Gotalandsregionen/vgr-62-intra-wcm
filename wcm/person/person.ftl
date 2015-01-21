@@ -2,9 +2,9 @@
   <h3>
     ${name.getData()}
   </h3>
-  <#if title.getData()?has_content>
+  <#if jobTitle.getData()?has_content>
   <p class="title">
-    ${title.getData()}
+    ${jobTitle.getData()}
   </p>
   </#if>
   <p class="email">
