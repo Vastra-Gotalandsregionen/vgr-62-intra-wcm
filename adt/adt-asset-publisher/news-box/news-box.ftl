@@ -15,8 +15,7 @@
 
 <#assign maxItemsToDisplay = 6 />
 
-<#assign maxSummaryChars = 80 />
-<#assign maxHeadingChars = 35 />
+<#assign maxHeadingChars = 60 />
 
 <div class="news-box">
 
@@ -56,9 +55,6 @@
               </div>
               <div class="news-item-heading">
                   ${ellipsis(itemHeading, maxHeadingChars)}
-              </div>
-              <div class="news-item-summary">
-                ${ellipsis(itemSummary, maxSummaryChars)}
               </div>
             </div>
           </a>
