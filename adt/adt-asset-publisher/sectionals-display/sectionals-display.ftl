@@ -1,58 +1,130 @@
 <#setting locale=locale>
 
 
+<#assign aui = taglibLiferayHash["/WEB-INF/tld/aui.tld"] />
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 <#assign liferay_util = taglibLiferayHash["/WEB-INF/tld/liferay-util.tld"] />
-
 <#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
 
-<#--
-<#assign portletCustomTitle = portletPreferences.getValue("portlet-setup-title-" + themeDisplay.getLanguageId(), themeDisplay.getPortletDisplay().getTitle()) />
--->
+<#assign portletNamespace = renderResponse.getNamespace() />
 
-
-
-
-
+<@liferay_ui["panel-container"] id="foo" extended=false persistState=false accordion=false >
 <div class="sectionals-listings-wrap">
 
   <h1>${themeDisplay.getPortletDisplay().getTitle()}</h1>
 
+  <div id="${portletNamespace}toggleControls" class="intra-panel-toggle-controls">
+    <span class="toggle-control toggle-control-expand" id="${portletNamespace}toggleControlsExpandAll">
+      F&auml;ll ut alla
+    </span>
+    <span class="toggle-control toggle-control-collapse hide" id="${portletNamespace}toggleControlsCollapseAll">
+      F&auml;ll ihop alla
+    </span>
+  </div>
+
   <#if entries?has_content>
-    <div class="staff-week-items">
-      <ul class="">
-        <#list entries as entry>
 
-          <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
-          <#assign entryHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
-          <#assign entryContent = docXml.valueOf("//dynamic-element[@name='content']/dynamic-content/text()") />
+      <#assign panelContainerId = portletNamespace + "sectionalPanelContainer" />
 
-          <#assign sections = docXml.selectNodes("//dynamic-element[@name='sectionHeading']") />
+      <div class="intra-panel-container">
+        <@liferay_ui["panel-container"] id=panelContainerId extended=true persistState=true >
+          <#list entries as entry>
 
-          <#assign displaySections = sections?size gt 1 />
-          <#if sections?size == 1>
-            <#assign displaySections =  (sections[0].valueOf("dynamic-content/text()") != "" )/>
-          </#if>
+            <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
+            <#assign entryHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
+            <#assign entryContent = docXml.valueOf("//dynamic-element[@name='content']/dynamic-content/text()") />
 
-          <li>
-            ${entryHeading}
+            <#assign sections = docXml.selectNodes("//dynamic-element[@name='sectionHeading']") />
 
-            <#if displaySections>
-              <ul>
-                <#list sections as section>
-                  <#assign sectionHeading = section.valueOf("dynamic-content/text()") />
-                  <li>
-                    ${sectionHeading}
-                  </li>
-                </#list>
-              </ul>
+            <#assign displaySections = sections?size gt 1 />
+            <#if sections?size == 1>
+              <#assign displaySections =  (sections[0].valueOf("dynamic-content/text()") != "" )/>
             </#if>
-          </li>
 
-        </#list>
-      </ul>
+            <#assign panelCssClass = "intra-panel" />
+            <#if entryContent != "">
+              <#assign panelCssClass = panelCssClass + " has-panel-content" />
+            </#if>
 
-    </div>
+            <#assign panelId = portletNamespace  + "panel" + entry_index />
+
+            <@liferay_ui.panel cssClass="${panelCssClass}" id=panelId collapsible=true defaultState="closed" extended=false persistState=true title="${entryHeading}">
+
+              <#if entryContent != "">
+                <div class="sectional-item-content">
+                  ${entryContent}
+                </div>
+              </#if>
+
+              <#if displaySections>
+                <div class="intra-child-panel-container">
+                  <#list sections as section>
+
+                    <#assign sectionHeading = section.valueOf("dynamic-content/text()") />
+                    <#assign sectionContent = section.valueOf("dynamic-element[@name='sectionContent']/dynamic-content/text()") />
+
+                    <#assign childPanelCssClass = "intra-child-panel" />
+                    <#if sectionContent != "">
+                      <#assign childPanelCssClass = childPanelCssClass + " has-panel-content" />
+                    </#if>
+
+                    <#assign sectionPanelId = portletNamespace + "panel" + entry_index + "_section" + section_index />
+
+                    <@liferay_ui.panel cssClass="${childPanelCssClass}" id=sectionPanelId collapsible=true defaultState="closed" extended=true persistState=true title="${sectionHeading}">
+                      <#if sectionContent != "">
+                        <div class="sectional-item-section-content">
+                          ${sectionContent}
+                        </div>
+                      </#if>
+                    </@liferay_ui.panel>
+
+                  </#list>
+                </div>
+              </#if>
+
+            </@liferay_ui.panel>
+
+          </#list>
+        </@>
+      </div>
+
+      <@aui.script use="aui-toggler,liferay-store">
+
+        var panelContainerId = '${panelContainerId}';
+        var accordionComponentId = '${portletNamespace + panelContainerId}';
+        var accordion = Liferay.component(accordionComponentId);
+        var accordionPanelContainer = A.one('#' + panelContainerId);
+
+        var toggleControlWrap = A.one('#${portletNamespace}toggleControls');
+        var toggleLinks = A.all('#${portletNamespace}toggleControls .toggle-control');
+
+        toggleLinks.on('click', function(e) {
+          e.halt();
+          var currentControl = e.currentTarget;
+
+          if(currentControl.hasClass('toggle-control-expand')) {
+            accordion.expandAll();
+          }
+
+          else if(currentControl.hasClass('toggle-control-collapse')) {
+            accordion.collapseAll();
+          }
+
+          var siblings = currentControl.siblings();
+
+          siblings.each(function(item) { item.show() });
+
+          currentControl.hide();
+
+        });
+
+
+        toggleControlWrap.addClass('intra-panel-toggle-controls-ready');
+
+      </@aui.script>
+
+
   </#if>
 
 </div>
+</@>
