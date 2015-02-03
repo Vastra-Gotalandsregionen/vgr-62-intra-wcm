@@ -16,7 +16,14 @@
 <div class="contacts-listing content-box">
 
   <h2>
-    Kontaktpersoner
+    <#assign heading = "Kontaktpersoner" />
+    <#assign portletTitle = themeDisplay.getPortletDisplay().getTitle() />
+
+    <#if portletTitle?lower_case != "innehållspresentatör" && portletTitle?lower_case != "asset publisher">
+      <#assign heading = portletTitle />
+    </#if>
+
+    ${heading}
   </h2>
 
   <div class="content-box-bd">
