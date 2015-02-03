@@ -1,6 +1,6 @@
 <#assign namespace = request["portlet-namespace"]>
 
-<div class="ifeed-parsed-wrap content-box">
+<div class="ifeed-parsed-wrap intra-list-wrap content-box">
 
 	<h2>
 		${heading.data}
@@ -22,7 +22,7 @@
 						<span>${feed.feedTitle.data}</span>
 					</h3>
 				</#if>
-				<div id="${namespace}feedContainer${feed_index}" class="ifeed-parsed-content"></div>
+				<div id="${namespace}feedContainer${feed_index}" class="ifeed-parsed-content intra-list-content"></div>
 			</div>
 		</#list>
 
