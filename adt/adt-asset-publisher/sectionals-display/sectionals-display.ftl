@@ -11,7 +11,11 @@
 <@liferay_ui["panel-container"] id="foo" extended=false persistState=false accordion=false >
 <div class="sectionals-listings-wrap">
 
-  <h1>${themeDisplay.getPortletDisplay().getTitle()}</h1>
+  <#assign portletTitle = themeDisplay.getPortletDisplay().getTitle() />
+
+  <#if portletTitle?lower_case != "innehållspresentatör" && portletTitle?lower_case != "asset publisher">
+    <h1>${themeDisplay.getPortletDisplay().getTitle()}</h1>
+  </#if>
 
   <div id="${portletNamespace}toggleControls" class="intra-panel-toggle-controls">
     <span class="toggle-control toggle-control-expand" id="${portletNamespace}toggleControlsExpandAll">
