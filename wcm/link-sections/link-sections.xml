@@ -62,7 +62,7 @@
 			</meta-data>
 		</dynamic-element>
 		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="linkUrl" readOnly="false" repeatable="true" required="true" showLabel="true" type="text" width="large">
-			<dynamic-element dataType="string" indexType="keyword" localizable="true" name="linkTitle" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+			<dynamic-element dataType="string" indexType="keyword" localizable="true" name="linkTitle" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="large">
 				<meta-data locale="sv_SE">
 					<entry name="label">
 						<![CDATA[Rubrik för länken]]>
