@@ -18,9 +18,9 @@
 
 <div class="news-listing">
 
-  <h2>
+  <h1>
     Nyheter
-  </h2>
+  </h1>
 
   <#if entries?has_content>
     <div class="news-items">
@@ -47,10 +47,16 @@
                 ${itemDate}
               </div>
               <div class="news-item-heading">
+                <#--
                 ${ellipsis(itemHeading, maxHeadingChars)}
+                -->
+                ${itemHeading}
               </div>
               <div class="news-item-summary">
+                <#--
                 ${ellipsis(itemSummary, maxSummaryChars)}
+                -->
+                ${itemSummary}
               </div>
             </div>
           </a>
