@@ -80,6 +80,7 @@
 				}
 
 				var toggler = new A.Toggler({
+					animated: true,
 					container: item,
 					content: contentNode,
 					expanded: expanded,
