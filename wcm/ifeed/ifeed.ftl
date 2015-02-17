@@ -2,9 +2,12 @@
 
 <div class="ifeed-parsed-wrap intra-list-wrap content-box">
 
-	<h2>
-		${heading.data}
-	</h2>
+
+	<#if heading.data != "">
+		<h2>
+			${heading.data}
+		</h2>
+	</#if>
 
 	<div class="content-box-bd">
 
