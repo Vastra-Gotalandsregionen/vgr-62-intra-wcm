@@ -35,12 +35,10 @@
     ${namespace}namespace = '${namespace}';
 
     <#-- Remove extra underscore at the end of namespace if exists -->
-    ${namespace}namespaceFixed = ${namespace}namespace.replace(/_\s*$/, "");
+    //${namespace}namespaceFixed = ${namespace}namespace.replace(/_\s*$/, "");
 
-
-    ${namespace}portletNode = document.getElementById( 'portlet' +  ${namespace}namespaceFixed)
-
-    ${namespace}portletNode.className = ${namespace}portletNode.className + " no-portlet-content";
+    ${namespace}portletBoundaryNode = document.getElementById('p_p_id' +  ${namespace}namespace);
+    ${namespace}portletBoundaryNode.className = ${namespace}portletBoundaryNode.className + " no-portlet-content";
 
   </script>
 </#if>
