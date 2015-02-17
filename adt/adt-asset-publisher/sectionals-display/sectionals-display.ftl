@@ -31,7 +31,7 @@
       <#assign panelContainerId = portletNamespace + "sectionalPanelContainer" />
 
       <div class="intra-panel-container">
-        <@liferay_ui["panel-container"] id=panelContainerId extended=true persistState=true >
+        <@liferay_ui["panel-container"] id=panelContainerId extended=true persistState=false >
           <#list entries as entry>
 
             <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
@@ -52,7 +52,7 @@
 
             <#assign panelId = portletNamespace  + "panel" + entry_index />
 
-            <@liferay_ui.panel cssClass="${panelCssClass}" id=panelId collapsible=true defaultState="closed" extended=false persistState=true title="${entryHeading}">
+            <@liferay_ui.panel cssClass="${panelCssClass}" id=panelId collapsible=true defaultState="closed" extended=false persistState=false title="${entryHeading}">
 
               <#if entryContent != "">
                 <div class="sectional-item-content">
@@ -74,7 +74,7 @@
 
                     <#assign sectionPanelId = portletNamespace + "panel" + entry_index + "_section" + section_index />
 
-                    <@liferay_ui.panel cssClass="${childPanelCssClass}" id=sectionPanelId collapsible=true defaultState="closed" extended=true persistState=true title="${sectionHeading}">
+                    <@liferay_ui.panel cssClass="${childPanelCssClass}" id=sectionPanelId collapsible=true defaultState="closed" extended=true persistState=false title="${sectionHeading}">
                       <#if sectionContent != "">
                         <div class="sectional-item-section-content">
                           ${sectionContent}
