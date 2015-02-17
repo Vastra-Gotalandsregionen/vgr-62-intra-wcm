@@ -15,7 +15,7 @@
 
 <#assign maxItemsToDisplay = 1 />
 
-<#assign maxSummaryChars = 170 />
+<#assign maxSummaryChars = 120 />
 
 <div class="staff-week-box content-box">
   <#if entries?has_content>
@@ -44,8 +44,13 @@
 
       <div class="content-box-bd">
         <a href="${viewURL}">
+
+          <p>
+            ${ellipsis(itemSummary, maxSummaryChars)}
+          </p>
+
           <img src="${itemImage}" alt"Img" />
-          ${ellipsis(itemSummary, maxSummaryChars)}
+
         </a>
       </div>
     </#list>
