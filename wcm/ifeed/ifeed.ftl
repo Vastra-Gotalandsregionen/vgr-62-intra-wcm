@@ -46,7 +46,7 @@
 			<li class="file">
 			{{/ifCond}}
 
-				<a href="{{url}}">
+				<a href="{{url}}" target="_BLANK">
 					{{title}}
 				</a>
 			</li>
