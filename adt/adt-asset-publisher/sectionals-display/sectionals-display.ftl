@@ -8,7 +8,6 @@
 
 <#assign portletNamespace = renderResponse.getNamespace() />
 
-<@liferay_ui["panel-container"] id="foo" extended=false persistState=false accordion=false >
 <div class="sectionals-listings-wrap">
 
   <#assign portletTitle = themeDisplay.getPortletDisplay().getTitle() />
@@ -28,7 +27,7 @@
 
   <#if entries?has_content>
 
-      <#assign panelContainerId = portletNamespace + "sectionalPanelContainer" />
+      <#assign panelContainerId = portletNamespace + "sectionalsPanelContainer" />
 
       <div class="intra-panel-container">
         <@liferay_ui["panel-container"] id=panelContainerId extended=true persistState=false >
@@ -50,7 +49,7 @@
               <#assign panelCssClass = panelCssClass + " has-panel-content" />
             </#if>
 
-            <#assign panelId = portletNamespace  + "panel" + entry_index />
+            <#assign panelId = portletNamespace  + "panel_" + entry_index />
 
             <@liferay_ui.panel cssClass="${panelCssClass}" id=panelId collapsible=true defaultState="closed" extended=false persistState=false title="${entryHeading}">
 
@@ -72,7 +71,7 @@
                       <#assign childPanelCssClass = childPanelCssClass + " has-panel-content" />
                     </#if>
 
-                    <#assign sectionPanelId = portletNamespace + "panel" + entry_index + "_section" + section_index />
+                    <#assign sectionPanelId = portletNamespace + "panel_" + entry_index + "_section" + section_index />
 
                     <@liferay_ui.panel cssClass="${childPanelCssClass}" id=sectionPanelId collapsible=true defaultState="closed" extended=true persistState=false title="${sectionHeading}">
                       <#if sectionContent != "">
@@ -131,4 +130,3 @@
   </#if>
 
 </div>
-</@>
