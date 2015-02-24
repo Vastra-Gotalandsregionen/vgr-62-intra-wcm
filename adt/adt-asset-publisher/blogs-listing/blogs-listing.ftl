@@ -13,8 +13,13 @@
 <#assign expandoValueLocalService = serviceLocator.findService("com.liferay.portlet.expando.service.ExpandoValueLocalService") />
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 
-<#assign blogPageFriendlyUrl = "/blogg" />
+<#assign blogsPortletId = "33" />
+<#assign blogsPagePlid = portalUtil.getPlidFromPortletId(group_id, page.isPrivateLayout(), blogsPortletId) />
+<#assign blogsLayout = layoutLocalService.getLayout(blogsPagePlid) />
+
+<#assign blogPageFriendlyUrl = blogsLayout.getFriendlyURL(locale) />
 <#assign blogEntryFriendlyUrlPrefix = "/-/blogs/" />
+
 
 <div class="blogs-listing content-box">
 
