@@ -13,6 +13,9 @@
 <#assign expandoValueLocalService = serviceLocator.findService("com.liferay.portlet.expando.service.ExpandoValueLocalService") />
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 
+<#assign blogPageFriendlyUrl = "/blogg" />
+<#assign blogEntryFriendlyUrlPrefix = "/-/blogs/" />
+
 <div class="blogs-listing content-box">
 
   <h2>
@@ -31,6 +34,8 @@
   				<#if assetLinkBehavior != "showFullContent">
   					<#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
   				</#if>
+
+          <#assign viewURL = blogPageFriendlyUrl + blogEntryFriendlyUrlPrefix + assetRenderer.getUrlTitle() />
 
           <div class="entry-item">
             <a href="${viewURL}">
@@ -58,6 +63,11 @@
     </#if>
 
   </div>
+
+  <div class="more-link-wrap">
+    <a href="${blogPageFriendlyUrl}" class="more-link">Fler blogginl&auml;gg &raquo;</a>
+  </div>
+
 
 </div>
 

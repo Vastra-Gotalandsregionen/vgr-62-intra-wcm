@@ -24,6 +24,7 @@
   </h1>
 
   <#if entries?has_content>
+
     <div class="news-items">
       <#list entries as entry>
 
@@ -38,7 +39,8 @@
 					<#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
 				</#if>
 
-        <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
+        <#assign article = assetRenderer.getArticle() />
+        <#assign docXml = saxReaderUtil.read(article.getContentByLocale(locale)) />
         <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
         <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
         <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
@@ -62,7 +64,18 @@
 
 
       </#list>
+
     </div>
+
+    <#assign entry = entries[0] />
+    <#assign article = entry.getAssetRenderer().getArticle() />
+    <#assign displayPageUuid = article.getLayoutUuid() />
+    <#assign displayPage = layoutLocalService.fetchLayoutByUuidAndGroupId(displayPageUuid, group_id, page.isPrivateLayout())! />
+    <#if displayPage?has_content>
+      <#assign displayPageUrl = displayPage.getFriendlyURL(locale) />
+      <a href="${displayPageUrl}" class="more-link">Fler nyheter &raquo;</a>
+    </#if>
+
   </#if>
 
 </div>

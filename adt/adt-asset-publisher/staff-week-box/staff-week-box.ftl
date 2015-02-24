@@ -1,6 +1,5 @@
 <#setting locale=locale>
 
-
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 <#assign liferay_util = taglibLiferayHash["/WEB-INF/tld/liferay-util.tld"] />
 
@@ -15,7 +14,7 @@
 
 <#assign maxItemsToDisplay = 1 />
 
-<#assign maxSummaryChars = 120 />
+<#assign maxSummaryChars = 80 />
 
 <div class="staff-week-box content-box">
   <#if entries?has_content>
@@ -32,7 +31,8 @@
         <#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
       </#if>
 
-      <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
+      <#assign article = assetRenderer.getArticle() />
+      <#assign docXml = saxReaderUtil.read(article.getContentByLocale(locale)) />
       <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
       <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
       <#assign itemImage = docXml.valueOf("//dynamic-element[@name='image']/dynamic-content/text()") />
@@ -46,16 +46,29 @@
         <a href="${viewURL}">
 
           <p>
-            ${ellipsis(itemSummary, maxSummaryChars)}
+            ${ellipsis(itemSummary, maxSummaryChars)} <span class="fake-link" href="${viewURL}">L&auml;s mer &raquo; </span>
           </p>
 
-          <img src="${itemImage}" alt"Img" />
+          <div class="img-wrap">
+            <img src="${itemImage}" alt"Img" />
+          </div>
 
         </a>
       </div>
     </#list>
-  </#if>
 
+    <#assign entry = entries[0] />
+    <#assign article = entry.getAssetRenderer().getArticle() />
+    <#assign displayPageUuid = article.getLayoutUuid() />
+    <#assign displayPage = layoutLocalService.fetchLayoutByUuidAndGroupId(displayPageUuid, group_id, page.isPrivateLayout())! />
+    <#if displayPage?has_content>
+      <#assign displayPageUrl = displayPage.getFriendlyURL(locale) />
+      <div class="more-link-wrap">
+        <a href="${displayPageUrl}" class="more-link">Fler min vecka &raquo;</a>
+      </div>
+    </#if>
+
+  </#if>
 </div>
 
 <#function ellipsis myString maxChars>
