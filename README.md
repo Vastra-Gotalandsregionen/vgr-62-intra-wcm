@@ -1,29 +1,29 @@
-# README #
+# Intra WCM #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This project includes structures and templates for Liferay WCM and Asset Display Templates (ADT) for Liferay portlets.
 
-### What is this repository for? ###
+## WCM structures and templates ##
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* block-navigation
+* dump
+* hero
+* ifeed
+* link-sections
+* links
+* navigation-list
+* news
+* person
+* puff
+* sectional
+* staff-week
+* top-alert
 
-### How do I get set up? ###
+## Application Display Templates (ADT) ##
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* adt-asset-publisher/blogs-listing
+* adt-asset-publisher/contacts-listing
+* adt-asset-publisher/news-box
+* adt-asset-publisher/news-listing
+* adt-asset-publisher/sectionals-display
+* adt-asset-publisher/staff-week-box
+* adt-asset-publisher/staff-week-listing
