@@ -24,16 +24,21 @@ Included WCM structures and templates are:
 
 Used for creating navigation menu comprised by an article with links to other site layouts. For each layout editor can specify an icon image and a short description.
 
-
+![Blocks Navigation](https://raw.githubusercontent.com/mrg3kko/vgr-62-intra-wcm/master/docs/wcm/block-navigation.png)
 
 ### dump ###
 
+Template that allows you to see all of the all of the available utilities, variables, their values, and their callable methods from your template, ADT, or theme context.
+
+Courtesy of James Falkner, Liferay. More information on [ this blogpost ](https://www.liferay.com/web/james.falkner/blog/-/blogs/dumping-adt-wcm-template-variables).
 
 ### hero ###
 
+**Not yet finished**. Hero article with an image.
 
 ### ifeed ###
 
+Article that displays an iFeed (VGR application for document publishing). Use JSON-url for iFeed. Editor may configure a title for the feed and an option for how to display the feed list...
 
 ### link-sections ###
 
