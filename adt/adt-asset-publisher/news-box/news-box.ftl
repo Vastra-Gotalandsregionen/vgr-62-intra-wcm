@@ -11,11 +11,18 @@
 <#assign company_id = themeDisplay.getCompanyId() />
 
 <#assign expandoValueLocalService = serviceLocator.findService("com.liferay.portlet.expando.service.ExpandoValueLocalService") />
+<#assign journalArticleLocalService = serviceLocator.findService("com.liferay.portlet.journal.service.JournalArticleLocalService")>
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 
 <#assign maxItemsToDisplay = 6 />
 
-<#assign maxHeadingChars = 60 />
+<#assign maxHeadingChars = 40 />
+<#assign maxSummaryChars = 120 />
+
+<#assign news_featured_article_id = expandoValueLocalService.getData(company_id, "com.liferay.portal.model.Group", "CUSTOM_FIELDS", "vgr-intra-news-featured-article-id", group_id, "")  />
+
+<#assign news_featured_article = journalArticleLocalService.getLatestArticle(group_id, news_featured_article_id)! />
+
 
 <div class="news-box">
 
@@ -26,42 +33,65 @@
   <#if entries?has_content>
 
     <div class="news-items">
+      <#assign rendered_items = 0 />
       <#list entries as entry>
 
-        <#if entry_index gte maxItemsToDisplay>
+        <#if rendered_items gte maxItemsToDisplay>
           <#break>
         </#if>
 
-				<#assign assetRenderer = entry.getAssetRenderer() />
-				<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
+        <#-- Do not display featured article -->
 
-				<#if assetLinkBehavior != "showFullContent">
-					<#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
-				</#if>
+        <#assign display_entry = true />
+        <#if news_featured_article?has_content>
+          <#if entry.classPK = news_featured_article.resourcePrimKey>
+            <#assign display_entry = false />
+          </#if>
+        </#if>
 
-        <#assign article = assetRenderer.getArticle() />
-        <#assign docXml = saxReaderUtil.read(article.getContentByLocale(locale)) />
-        <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
-        <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
-        <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
-        <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
+        <#if display_entry>
 
-        <#assign itemType = docXml.valueOf("//dynamic-element[@name='type']/dynamic-content/text()") />
+  				<#assign assetRenderer = entry.getAssetRenderer() />
+  				<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
 
+  				<#if assetLinkBehavior != "showFullContent">
+  					<#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
+  				</#if>
 
-        <div class="news-item news-item-${itemType}">
-          <a href="${viewURL}">
-            <div class="news-item-inner">
-              <div class="news-item-date">
-                ${itemDate}
+          <#assign article = assetRenderer.getArticle() />
+          <#assign docXml = saxReaderUtil.read(article.getContentByLocale(locale)) />
+          <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
+          <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
+          <#assign itemContent = docXml.valueOf("//dynamic-element[@name='content']/dynamic-content/text()") />
+          <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
+
+          <#assign itemContent = htmlUtil.stripHtml(itemContent) />
+          <#if !itemSummary?has_content>
+            <#assign itemSummary = itemContent />
+          </#if>
+
+          <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
+
+          <#assign itemType = docXml.valueOf("//dynamic-element[@name='type']/dynamic-content/text()") />
+
+          <div class="news-item news-item-${itemType}">
+            <a href="${viewURL}">
+              <div class="news-item-inner">
+                <div class="news-item-date">
+                  ${itemDate}
+                </div>
+                <div class="news-item-heading">
+                    ${ellipsis(itemHeading, maxHeadingChars)}
+                </div>
+                <div class="news-item-summary">
+                  ${ellipsis(itemSummary, maxSummaryChars)}
+                </div>
               </div>
-              <div class="news-item-heading">
-                  ${ellipsis(itemHeading, maxHeadingChars)}
-              </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
 
+          <#assign rendered_items = rendered_items + 1 />
+        </#if>
 
       </#list>
 
