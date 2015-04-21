@@ -55,9 +55,11 @@
     </h3>
   </a>
 <#else>
+  <#--
   <div class="portlet-msg-info">
     Du har inte satt n&aring;gon artikel som featured. Uppdatera "egna f&auml;ltet" som heter "Vgr Intra News Featured Article Id" med ett artikel-id.
   </div>
+  -->
 </#if>
 
 
