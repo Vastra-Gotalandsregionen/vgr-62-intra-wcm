@@ -10,21 +10,29 @@
 <#assign group_id = page.getGroupId() />
 <#assign company_id = themeDisplay.getCompanyId() />
 
-<div class="content-box">
-
-	<h2>${feedTitle}</h2>
+<div class="content-box content-box-simple">
 
 	<div class="content-box-bd">
     <#list entries as entry>
-      <div>
-        <a href="${entry.link}" target="_BLANK">
-          ${entry.title}
-          <div>
-            ${entry.publishedDate?string["dd MMM yyyy"]}
-          </div>
 
-        </a>
-      </div>
+			<div class="entry-item">
+				<a href="${entry.link}" target="_blank">
+					<div class="entry-date">
+						<div class="entry-date-inner">
+							<div class="entry-date-month">
+								${entry.publishedDate?string["MMM"]}
+							</div>
+							<div class="entry-date-day">
+								${entry.publishedDate?string["dd"]}
+							</div>
+						</div>
+					</div>
+					<div class="entry-content">
+						${entry.title}
+					</div>
+				</a>
+			</div>
+
     </#list>
 	</div>
 
