@@ -36,7 +36,7 @@
 						<span class="fake-link">L&auml;s mer &raquo;</span>
 					</div>
 
-      </div>
+      </a>
     </#list>
 	</div>
 

@@ -19,7 +19,12 @@
 
 		<#list feedUrl.siblings as feed>
 
-			<div class="ifeed-parsed-container" data-url="${feed.data}" data-displaytype="${feed.feedTitle.displayType.data}">
+			<div
+				class="ifeed-parsed-container"
+				data-url="${feed.data}"
+				data-displaytype="${feed.feedTitle.displayType.data}"
+				
+			>
 				<#if feed.feedTitle.data != "">
 					<h3 class="ifeed-parsed-title">
 						<span>${feed.feedTitle.data}</span>
