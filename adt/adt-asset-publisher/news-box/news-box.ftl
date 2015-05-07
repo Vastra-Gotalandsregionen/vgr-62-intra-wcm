@@ -17,7 +17,7 @@
 <#assign maxItemsToDisplay = 6 />
 
 <#assign maxHeadingChars = 40 />
-<#assign maxSummaryChars = 120 />
+<#assign maxSummaryChars = 40 />
 
 <#assign news_featured_article_id = expandoValueLocalService.getData(company_id, "com.liferay.portal.model.Group", "CUSTOM_FIELDS", "vgr-intra-news-featured-article-id", group_id, "")  />
 
