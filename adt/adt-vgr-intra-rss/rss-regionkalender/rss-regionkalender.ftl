@@ -20,10 +20,18 @@
 					<div class="entry-date">
 						<div class="entry-date-inner">
 							<div class="entry-date-month">
-								${entry.publishedDate?string["MMM"]}
+								<#if entry.startDate?has_content>
+									${entry.startDate?string["MMM"]}
+								<#else>
+									${entry.publishedDate?string["MMM"]}
+								</#if>
 							</div>
 							<div class="entry-date-day">
-								${entry.publishedDate?string["dd"]}
+								<#if entry.startDate?has_content>
+									${entry.startDate?string["dd"]}
+								<#else>
+									${entry.publishedDate?string["dd"]}
+								</#if>
 							</div>
 						</div>
 					</div>
