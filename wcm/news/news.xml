@@ -49,6 +49,13 @@
 				</entry>
 			</meta-data>
 		</dynamic-element>
+		<dynamic-element name="option5435" type="option" value="fouu">
+			<meta-data locale="sv_SE">
+				<entry name="label">
+					<![CDATA[FoUU]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
 		<dynamic-element name="option5473" type="option" value="handelser">
 			<meta-data locale="sv_SE">
 				<entry name="label">
@@ -67,6 +74,13 @@
 			<meta-data locale="sv_SE">
 				<entry name="label">
 					<![CDATA[Miljö]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option5436" type="option" value="human-rights">
+			<meta-data locale="sv_SE">
+				<entry name="label">
+					<![CDATA[Mänskliga rättigheter]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
@@ -109,6 +123,13 @@
 			<meta-data locale="sv_SE">
 				<entry name="label">
 					<![CDATA[VGR]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option5437" type="option" value="">
+			<meta-data locale="sv_SE">
+				<entry name="label">
+					<![CDATA[]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
