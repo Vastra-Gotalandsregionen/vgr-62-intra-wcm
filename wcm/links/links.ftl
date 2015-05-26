@@ -1,4 +1,6 @@
+<#--
 <#assign namespace = request["portlet-namespace"]>
+-->
 
 <div class="intra-list-wrap content-box">
 

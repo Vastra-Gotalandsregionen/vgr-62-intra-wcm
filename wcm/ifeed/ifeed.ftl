@@ -41,15 +41,18 @@
 	<ul>
 		{{#each this}}
 			{{#ifCond format '==' 'application/pdf' }}
-			<li class="pdf">
+				<li class="pdf">
+					<a href="{{[dc.identifier.native]}}" target="_BLANK">
+						{{title}}
+					</a>
+				</li>
 			{{else}}
-			<li class="file">
-			{{/ifCond}}
-
-				<a href="{{url}}" target="_BLANK">
-					{{title}}
-				</a>
+				<li class="file">
+					<a href="{{url}}" target="_BLANK">
+						{{title}}
+					</a>
 			</li>
+			{{/ifCond}}
 		{{/each}}
 	</ul>
 </script>
