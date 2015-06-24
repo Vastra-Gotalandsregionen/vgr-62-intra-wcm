@@ -3,8 +3,11 @@
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService") >
 
 <#-- Define some variables -->
-<#assign portletNamespace = request["portlet-namespace"] />
-<#assign portletNamespace = trimPortletNamespace(portletNamespace) />
+<#assign portletNamespace = "" />
+<#if request["portlet-namespace"]?has_content>
+	<#assign portletNamespace = request["portlet-namespace"] />
+	<#assign portletNamespace = trimPortletNamespace(portletNamespace) />
+</#if>
 
 <#assign maxDescriptionChars = 140 />
 
