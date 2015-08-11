@@ -10,7 +10,7 @@
 <#assign group_id = page.getGroupId() />
 <#assign company_id = themeDisplay.getCompanyId() />
 
-<div class="content-box">
+<div class="content-box we-are-vgr">
 
 	<h2>${feedTitle}</h2>
 
