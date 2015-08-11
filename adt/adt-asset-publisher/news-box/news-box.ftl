@@ -16,7 +16,7 @@
 
 <#assign maxItemsToDisplay = 4 />
 
-<#assign maxHeadingChars = 40 />
+<#assign maxHeadingChars = 35 />
 
 <#assign news_featured_article_id = expandoValueLocalService.getData(company_id, "com.liferay.portal.model.Group", "CUSTOM_FIELDS", "vgr-intra-news-featured-article-id", group_id, "")  />
 
@@ -45,7 +45,7 @@
         </#if>
 
         <div class="news-focused">
-      
+
           <img src="${featuredImage}" alt="" class="" />
           <div class="news-info">
             <span class="news-info-date">
@@ -61,7 +61,7 @@
     </div>
 
     <div class="news-listed-wrap">
-      
+
       <#assign rendered_items = 0 />
       <#list entries as entry>
 
@@ -78,7 +78,7 @@
           </#if>
         </#if>
 
-        <#if display_entry>        
+        <#if display_entry>
 
 
           <#assign assetRenderer = entry.getAssetRenderer() />

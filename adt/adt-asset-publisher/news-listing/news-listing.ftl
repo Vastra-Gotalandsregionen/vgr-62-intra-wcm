@@ -13,7 +13,7 @@
 <#assign expandoValueLocalService = serviceLocator.findService("com.liferay.portlet.expando.service.ExpandoValueLocalService") />
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 
-<#assign maxSummaryChars = 50 />
+<#assign maxSummaryChars = 150 />
 <#assign maxHeadingChars = 25 />
 
 <div class="news-listing">
@@ -36,11 +36,17 @@
         <#assign docXml = saxReaderUtil.read(entry.getAssetRenderer().getArticle().getContentByLocale(locale)) />
         <#assign itemHeading = docXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
         <#assign itemSummary = docXml.valueOf("//dynamic-element[@name='summary']/dynamic-content/text()") />
+        <#assign itemContent = docXml.valueOf("//dynamic-element[@name='content']/dynamic-content/text()") />
         <#assign itemDate = docXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
         <#assign itemDate = itemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
+        <#assign itemType = docXml.valueOf("//dynamic-element[@name='type']/dynamic-content/text()") />
 
+        <#assign itemContent = htmlUtil.stripHtml(itemContent) />
+        <#if !itemSummary?has_content>
+          <#assign itemSummary = itemContent />
+        </#if>
 
-        <div class="news-item">
+        <div class="news-item news-item-${itemType}">
           <a href="${viewURL}">
             <div class="news-item-inner">
               <div class="news-item-date">
@@ -53,10 +59,7 @@
                 ${itemHeading}
               </div>
               <div class="news-item-summary">
-                <#--
                 ${ellipsis(itemSummary, maxSummaryChars)}
-                -->
-                ${itemSummary}
               </div>
             </div>
           </a>
