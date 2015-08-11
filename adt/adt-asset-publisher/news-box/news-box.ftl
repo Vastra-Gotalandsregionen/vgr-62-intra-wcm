@@ -17,6 +17,7 @@
 
 <#assign maxItemsToDisplay = 4 />
 
+<#assign maxFeaturedHeadingChars = 40 />
 <#assign maxHeadingChars = 35 />
 
 <#assign news_featured_article_id = expandoValueLocalService.getData(company_id, "com.liferay.portal.model.Group", "CUSTOM_FIELDS", "vgr-intra-news-featured-article-id", group_id, "")  />
@@ -34,39 +35,43 @@
 
     <div class="news-focused-wrap">
 
-      <#assign featuredEntry = assetEntryLocalService.fetchEntry("com.liferay.portlet.journal.model.JournalArticle", news_featured_article.getResourcePrimKey()) />
-      <#assign featuredAssetRenderer = featuredEntry.getAssetRenderer() />
+      <#if news_featured_article?has_content>
+      
+        <#assign featuredEntry = assetEntryLocalService.fetchEntry("com.liferay.portlet.journal.model.JournalArticle", news_featured_article.getResourcePrimKey()) />
+        <#assign featuredAssetRenderer = featuredEntry.getAssetRenderer() />
 
-      <#assign featuredViewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, featuredEntry) />
+        <#assign featuredViewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, featuredEntry) />
 
-      <#if assetLinkBehavior != "showFullContent">
-        <#assign featuredViewURL = featuredAssetRenderer.getURLViewInContext(renderRequest, renderResponse, featuredViewURL) />
-      </#if>
-
-        <#assign featuredDocXml = saxReaderUtil.read(news_featured_article.getContentByLocale(locale)) />
-        <#assign featuredItemHeading = featuredDocXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
-        <#assign featuredItemDate = featuredDocXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
-        <#assign featuredImage = featuredDocXml.valueOf("//dynamic-element[@name='featuredImage']/dynamic-content/text()") />
-
-        <#assign featuredItemDate = featuredItemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
-
-        <#if !featuredImage?has_content>
-          <#assign featuredImage = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+        <#if assetLinkBehavior != "showFullContent">
+          <#assign featuredViewURL = featuredAssetRenderer.getURLViewInContext(renderRequest, renderResponse, featuredViewURL) />
         </#if>
 
-        <a class="news-focused" href="${featuredViewURL}">
+          <#assign featuredDocXml = saxReaderUtil.read(news_featured_article.getContentByLocale(locale)) />
+          <#assign featuredItemHeading = featuredDocXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
+          <#assign featuredItemDate = featuredDocXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
+          <#assign featuredImage = featuredDocXml.valueOf("//dynamic-element[@name='featuredImage']/dynamic-content/text()") />
 
-          <img src="${featuredImage}" alt="" class="" />
-          <div class="news-info">
-            <span class="news-info-date">
-              ${featuredItemDate}
-            </span>
-            <span class="news-info-titke">
-              ${featuredItemHeading}
-            </span>
-          </div>
+          <#assign featuredItemDate = featuredItemDate?number?long?number_to_datetime?string("yyyy-MM-dd")>
 
-        </a>
+          <#if !featuredImage?has_content>
+            <#assign featuredImage = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+          </#if>
+
+          <a class="news-focused" href="${featuredViewURL}">
+
+            <img src="${featuredImage}" alt="" class="" />
+            <div class="news-info">
+              <span class="news-info-date">
+                ${featuredItemDate}
+              </span>
+              <span class="news-info-title">
+                ${ellipsis(featuredItemHeading, maxFeaturedHeadingChars)}
+              </span>
+            </div>
+
+          </a>
+
+        </#if>
 
     </div>
 
