@@ -40,7 +40,7 @@
 <script id="${namespace}feedTemplate" type="text/x-handlebars-template">
 	<ul>
 		{{#each this}}
-			{{#ifCond format '==' 'application/pdf' }}
+			{{#ifCond [dc.format.extension.native] '==' 'pdf' }}
 				<li class="pdf">
 					<a href="{{[dc.identifier.native]}}" target="_BLANK">
 						{{title}}
