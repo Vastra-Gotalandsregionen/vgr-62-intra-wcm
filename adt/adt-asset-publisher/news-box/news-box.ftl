@@ -10,6 +10,7 @@
 <#assign group_id = page.getGroupId() />
 <#assign company_id = themeDisplay.getCompanyId() />
 
+<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.portlet.asset.service.AssetEntryLocalService")>
 <#assign expandoValueLocalService = serviceLocator.findService("com.liferay.portlet.expando.service.ExpandoValueLocalService") />
 <#assign journalArticleLocalService = serviceLocator.findService("com.liferay.portlet.journal.service.JournalArticleLocalService")>
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
@@ -33,6 +34,15 @@
 
     <div class="news-focused-wrap">
 
+      <#assign featuredEntry = assetEntryLocalService.fetchEntry("com.liferay.portlet.journal.model.JournalArticle", news_featured_article.getResourcePrimKey()) />
+      <#assign featuredAssetRenderer = featuredEntry.getAssetRenderer() />
+
+      <#assign featuredViewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, featuredEntry) />
+
+      <#if assetLinkBehavior != "showFullContent">
+        <#assign featuredViewURL = featuredAssetRenderer.getURLViewInContext(renderRequest, renderResponse, featuredViewURL) />
+      </#if>
+
         <#assign featuredDocXml = saxReaderUtil.read(news_featured_article.getContentByLocale(locale)) />
         <#assign featuredItemHeading = featuredDocXml.valueOf("//dynamic-element[@name='heading']/dynamic-content/text()") />
         <#assign featuredItemDate = featuredDocXml.valueOf("//dynamic-element[@name='date']/dynamic-content/text()") />
@@ -44,7 +54,7 @@
           <#assign featuredImage = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
         </#if>
 
-        <div class="news-focused">
+        <a class="news-focused" href="${featuredViewURL}">
 
           <img src="${featuredImage}" alt="" class="" />
           <div class="news-info">
@@ -56,7 +66,7 @@
             </span>
           </div>
 
-        </div>
+        </a>
 
     </div>
 
@@ -79,7 +89,6 @@
         </#if>
 
         <#if display_entry>
-
 
           <#assign assetRenderer = entry.getAssetRenderer() />
           <#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
