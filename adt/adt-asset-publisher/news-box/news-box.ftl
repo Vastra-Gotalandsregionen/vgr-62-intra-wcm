@@ -33,10 +33,10 @@
 
   <#if entries?has_content>
 
-    <div class="news-focused-wrap">
+    <div class="news-featured-wrap">
 
       <#if news_featured_article?has_content>
-      
+
         <#assign featuredEntry = assetEntryLocalService.fetchEntry("com.liferay.portlet.journal.model.JournalArticle", news_featured_article.getResourcePrimKey()) />
         <#assign featuredAssetRenderer = featuredEntry.getAssetRenderer() />
 
@@ -57,7 +57,7 @@
             <#assign featuredImage = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
           </#if>
 
-          <a class="news-focused" href="${featuredViewURL}">
+          <a class="news-featured" href="${featuredViewURL}">
 
             <img src="${featuredImage}" alt="" class="" />
             <div class="news-info">
