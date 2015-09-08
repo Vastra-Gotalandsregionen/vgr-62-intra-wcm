@@ -20,7 +20,12 @@
 
 			<#assign pageLayout = layoutLocalService.getLayout(pageLayoutGroupId, pageLayoutIsPrivate, pageLayoutId) >
 
+			<#assign pageIcon = page.icon.data />
+
 			<li>
+				<#if pageIcon != "">
+				<i class="icon-${pageIcon}"></i>&nbsp;
+				</#if>
 				<a href="${pageLayout.friendlyURL}">
 					${pageLayout.getName(locale) }
 				</a>
