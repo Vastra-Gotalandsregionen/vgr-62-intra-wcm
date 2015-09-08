@@ -1,4 +1,4 @@
-<#assign namespace = request["portlet-namespace"]>
+<#assign namespace = request["portlet-namespace"]!>
 
 <#-- Decide if block should be shown or not -->
 <#assign showBlock = true />
