@@ -1,7 +1,6 @@
 
 <root available-locales="sv_SE" default-locale="sv_SE">
-	<dynamic-element dataType="link-to-page" fieldNamespace="ddm" indexType="keyword" localizable="true" name="pages" readOnly="false" repeatable="true" required="true" showLabel="true" type="ddm-link-to-page" width="large">
-
+	<dynamic-element dataType="link-to-page" fieldNamespace="ddm" indexType="keyword" localizable="true" name="pages" readOnly="false" repeatable="true" required="false" showLabel="true" type="ddm-link-to-page" width="large">
 		<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="false" name="icon" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
 			<dynamic-element name="option3694" type="option" value="">
 				<meta-data locale="sv_SE">
@@ -185,7 +184,7 @@
 					</entry>
 				</meta-data>
 			</dynamic-element>
-		  <dynamic-element name="option8117" type="option" value="chevron-up">
+			<dynamic-element name="option8117" type="option" value="chevron-up">
 				<meta-data locale="sv_SE">
 					<entry name="label">
 						<![CDATA[chevron-up]]>
@@ -449,7 +448,6 @@
 				</entry>
 			</meta-data>
 		</dynamic-element>
-
 		<meta-data locale="sv_SE">
 			<entry name="label">
 				<![CDATA[Länk]]>
